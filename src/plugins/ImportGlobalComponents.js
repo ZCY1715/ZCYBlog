@@ -1,11 +1,11 @@
-// 导入全局自定义组件
+// 导入全局 components
 
 export default {
   install(app) {
-    const moduleFiles = import.meta.globEager('../components/Global/*.vue')
+    const moduleFiles = import.meta.glob('../components/Global/*.vue', { eager: true })
     for (let module of Object.keys(moduleFiles)) {
       const component = moduleFiles[module].default
-      const name = module.match(/[^/]+?(?=.vue)/)[0]
+      const name = module.match(/[^/]+?(?=\.vue)/)[0]
       app.component(
         name,
         component

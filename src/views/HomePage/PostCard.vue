@@ -2,7 +2,6 @@
 import { useRouter } from 'vue-router'
 import TagBar from '../../components/TagBar.vue'
 import CategoryBar from '../../components/CategoryBar.vue'
-import Date from '../../assets/svgs/Date.svg?vueComponent'
 
 const { data, index } = defineProps({
   data: Object,

@@ -1,7 +1,6 @@
 <script setup>
 import useStore from '../store'
 import { computed, ref } from 'vue'
-import Arrow from '../assets/svgs/Arrow.svg?vueComponent'
 import { useRouter } from 'vue-router'
 
 const store = useStore()

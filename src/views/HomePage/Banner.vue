@@ -1,9 +1,8 @@
 <script setup>
 import useStore from "../../store"
 import useScroll from "../../hooks/useScroll"
-import Arrow from '../../assets/svgs/Arrow.svg?vueComponent'
 import typed from '../../utils/typed'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, onBeforeUnmount } from 'vue'
 import { IsPC } from "../../utils"
 import useRandomImg from "../../hooks/useRandomImg"
 
@@ -27,9 +26,15 @@ const mottoRef = ref(null)
 const motto = computed(() => {
   return store.config.motto || `君子藏器于身，待时而动！`
 })
+let handleAbortTyped = null
 onMounted(() => {
-  typed(mottoRef.value, motto.value)
+  handleAbortTyped = typed(mottoRef.value, motto.value)
 })
+
+onBeforeUnmount(() => {
+  handleAbortTyped && handleAbortTyped()
+})
+
 
 const showBanner = ref(IsPC())
 

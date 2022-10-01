@@ -1,5 +1,4 @@
 <script setup>
-import Arrow from '../../assets/svgs/Arrow.svg?vueComponent'
 import useStore from '../../store'
 import useScroll from '../../hooks/useScroll'
 import { computed } from 'vue'

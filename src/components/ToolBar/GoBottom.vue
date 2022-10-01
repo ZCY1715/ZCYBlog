@@ -1,5 +1,4 @@
 <script setup>
-import GoBottom from '../../assets/svgs/GoBottom.svg?vueComponent'
 import useScroll from '../../hooks/useScroll'
 
 const [scrollNode, _] = useScroll()

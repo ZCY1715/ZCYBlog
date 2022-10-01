@@ -1,5 +1,4 @@
 <script setup>
-import Category from '../assets/svgs/Category.svg?vueComponent'
 
 const { data } = defineProps({
   data: Array

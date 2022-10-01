@@ -1,7 +1,6 @@
 <script setup>
 import useStore from '../../store'
 import { ref, onMounted } from 'vue'
-import Arrow from '../../assets/svgs/Arrow.svg?vueComponent'
 import { useRouter } from 'vue-router'
 import useRandomImg from '../../hooks/useRandomImg'
 

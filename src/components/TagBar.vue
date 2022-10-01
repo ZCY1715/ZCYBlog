@@ -1,5 +1,4 @@
 <script setup>
-import Tag from '../assets/svgs/Tag.svg?vueComponent'
 
 const { data } = defineProps({
   data: Array

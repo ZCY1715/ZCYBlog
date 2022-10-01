@@ -1,6 +1,4 @@
 <script setup>
-import Close from '../assets/svgs/Close.svg?vueComponent'
-import Search from '../assets/svgs/Search.svg?vueComponent'
 import { debounce } from '../utils'
 import useStore from '../store'
 import { ref, computed, watch, onMounted } from 'vue'
