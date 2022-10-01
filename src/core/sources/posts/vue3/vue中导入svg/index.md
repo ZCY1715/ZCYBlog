@@ -40,7 +40,8 @@ import svgSprites from 'rollup-plugin-svg-sprites'
 export default defineConfig({
     plugins: [
         svgSprites({
-      		exclude: ['node_modules/**']
+            vueComponent: true,
+            exclude: ['node_modules/**']
     	}),
     ]
 })
@@ -49,13 +50,9 @@ export default defineConfig({
 3. 在组件中使用
 
 ```js
-<script>
-// `?vueComponent` 不能省略
-import Tag from './Tag.svg?vueComponent'
+<script setup>
+import Tag from './Tag.svg'
 
-export default {
-    components: { Tag },
-}
 </script>
 
 <template>

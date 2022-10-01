@@ -43,10 +43,6 @@ function saveAsImage(node) {
     height: node.offsetHeight
   }).then((canvas) => {
     const context = canvas.getContext('2d')
-    context.mozImageSmoothingEnabled = false
-    context.webkitImageSmoothingEnabled = false
-    context.msImageSmoothingEnabled = false
-    context.imageSmoothingEnabled = false
     const dataURL = canvas.toDataURL()
     const a = document.createElement('a')
     document.body.appendChild(a)

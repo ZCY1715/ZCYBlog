@@ -19,9 +19,9 @@ copyright: 本博客所有文章除特别声明外，均采用 <a target="_blank
 backgroundEffect:
   sakura: false
 clickEffect:
-  heart: false
+  heart: true
   boom: false
-  grain: true
+  grain: false
 
 post:
   numInPage: 10

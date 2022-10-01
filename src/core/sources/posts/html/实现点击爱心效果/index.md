@@ -1,3 +1,49 @@
+---
+
+# 默认为文件名称
+title: 
+
+tags:
+  - canvas
+  - 点击效果
+
+# 类别中已包含文件夹名称
+categories:
+
+description: 利用 canvas 封装一个鼠标点击爱心效果
+
+# 该字段必须,格式 <YYYY-MM-DD hh:mm:ss>
+publishTime: 2022-10-01 23:02:18
+updateTime:
+ 
+# 默认随机
+img: 
+
+# 目录
+toc: false
+
+# 评论
+comment: true
+
+# 发布
+publish: true
+---
+
+效果：
+
+👉[点击预览](/resources/Click_heart/index.html)
+
+在 html 中：
+
+```html
+<script defer src="./heart.js"></script>
+```
+
+heart.js 实现：
+
+**canvas 结合心形线函数**
+
+```js
 (
     function (window, document) {
 
@@ -111,3 +157,4 @@
 
     }
 )(window, document)
+```
