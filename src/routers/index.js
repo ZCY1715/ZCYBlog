@@ -26,7 +26,7 @@ const routes = [
 
 const Router = createRouter({
   history: createWebHashHistory(),
-  routes
+  routes,
 })
 
 // 刷新时回到刷新之前的路由
