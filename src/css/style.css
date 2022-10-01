@@ -1,0 +1,80 @@
+:root {
+  --theme-color: #F4AF43;
+  --pointer : url('../assets/cursors/pointer.cur') ,pointer;
+}
+
+@font-face {
+  font-family: "Ubuntu";
+  src: url('../assets/font/Ubuntu-Regular.ttf');
+}
+
+* {
+  font-family: "Ubuntu", serif !important;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  cursor: url('../assets/cursors/default.cur'), default;
+  transition: .3s;
+  color: var(--z-color-normal);
+  -webkit-tap-highlight-color: transparent;
+}
+
+html,
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:link,
+a:visited,
+a:hover,
+a:active,
+a:focus {
+  color: inherit;
+  text-decoration: none;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+  height: 3px;
+  background: var(--z-scrollbar-background);
+  border-radius: 4px;
+  transition: .3s;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--z-scrollbar-thumb-background);
+}
+
+::selection { 
+  background: var(--z-selection-background); 
+  color: var(--z-selection-color); 
+} 
+::-moz-selection { 
+  background: var(--z-selection-background); 
+  color: var(--z-selection-color); 
+} 
+::-webkit-selection { 
+  background: var(--z-selection-background); 
+  color: var(--z-selection-color);
+}
+
+svg {
+  width: inherit;
+  height: inherit;
+  fill: var(--theme-color);
+}
+
+
+.scrollX {
+  overflow: visible !important;
+  overflow-x: visible !important;
+  overflow-y: hidden !important;
+}
+
+.scrollY {
+  overflow: visible !important;
+  overflow-x: hidden !important;
+  overflow-y: visible !important;
+}

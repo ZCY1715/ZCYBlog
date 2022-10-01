@@ -1,0 +1,147 @@
+- title: 常用
+
+  children:
+    - name: ZCYBlog
+      url: https://zcyblog.tk
+      description: 本站
+
+    - name: GitHub
+      url: https://github.com
+
+    - name: Leancloud
+      url: https://console.leancloud.cn/apps
+      description: Serveless 云数据库服务
+
+    - name: Netlify
+      url: https://app.netlify.com/
+      description: Serveless 托管平台
+
+    - name: Vercel
+      url: https://vercel.com/
+      description: Serveless 托管平台
+
+    - name: baidu 统计
+      url: https://tongji.baidu.com/
+      description: 关于网站各方面的数据分析
+
+    - name: Railway
+      url: https://railway.app/dashboard
+      description: 托管脚本、云数据库等
+    - name: DNSPod
+      url: https://console.dnspod.cn/
+      description: 域名管理
+
+- title: 文档
+
+  children:
+    - name: Vue2中文
+      url: https://v2.cn.vuejs.org
+
+    - name: Vue3中文
+      url: https://cn.vuejs.org
+
+    - name: Pinia
+      url: https://pinia.vuejs.org/
+      description: vue3的状态管理库
+
+    - name: vue-Router
+      url: https://router.vuejs.org/zh/
+      description: vue的官方路由库
+
+    - name: Valine
+      url: https://valine.js.org/
+      description: 一款快速、简洁且高效的无后端评论系统
+
+    - name: Waline
+      url: https://waline.js.org/
+      description: 一款基于 Valine 衍生的简洁、安全的评论系统，带评论管理系统
+
+    - name: Quasar
+      url: http://www.quasarchs.com/
+      description: 桌面端、移动端、web端; quasar配置 vue3+vite+electron
+
+    - name: elementPlus
+      url: https://element-plus.gitee.io/zh-CN/
+      description: vue超好用组件库，elementUI 升级版
+
+    - name: React中文
+      url: https://zh-hans.reactjs.org/
+
+    - name: Recoil
+      url: https://www.recoiljs.cn/
+      description: React 状态管理库
+
+    - name: ECharts
+      url: https://echarts.apache.org/zh/index.html
+      description: 制作图表的库，无敌
+
+    - name: Solidjs
+      url: https://www.solidjs.com/
+      description: 又一前端框架
+
+    - name: uni-app
+      url: https://uniapp.dcloud.net.cn/
+      description: 移动端和小程序开发
+
+    - name: flutter
+      url: https://flutter.cn/
+      description: 谷歌的多端实现方案
+
+- title: 资源
+
+  children:
+    - name: eu.org 域名申请
+      url: https://nic.eu.org/arf/en/
+
+    - name: Freenom
+      url: https://www.freenom.com/zh/index.html?lang=zh
+      description: 免费域名申请
+
+    - name: 彼岸壁纸
+      url: http://www.netbian.com/
+      description: 里面图片很多很漂亮，都可以免费下载
+
+    - name: Google Fonts
+      url: https://developers.google.cn/fonts
+      description: 谷歌字体免费用
+
+    - name: music 外链转换
+      url: https://link.hhtjim.com/
+      description: 各大主流音乐平台都可转成外链，或者下载
+
+    - name: Imgbb 图床
+      url: https://imgbb.com/
+      description: 免费图床、图片管理、支持API上传图片
+
+    - name: 花瓣
+      url: https://huaban.com/discovery
+      description: 找gif资源、图片素材等
+
+- title: 工具
+
+  children:
+    - name: iconfont
+      url: https://www.iconfont.cn
+      description: icon图标素材库
+
+    - name: IPinfo
+      url: https://ipinfo.io/
+      description: 查询ip信息
+
+    - name: 地址生成器
+      url: https://www.meiguodizhi.com/
+
+    - name: 改图宝
+      url: https://www.gaitubao.com/
+      description: 在线修改图片很有用
+
+- title: 学习
+
+  children:
+    - name: MDN
+      url: https://developer.mozilla.org/zh-CN/
+      description: MDN Web Docs
+
+    - name: 33-js-concepts
+      url: https://github.com/stephentian/33-js-concepts
+      description: 前端的33个概念

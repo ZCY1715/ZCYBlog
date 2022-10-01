@@ -1,0 +1,39 @@
+websiteTitle: ZCYBlog
+bannerImg: /imgs/bg.jpg
+logoName: ༺ۣۖ神ۣۖ༒ۣ仙ۣۖ༻
+motto: 君子藏器于身，待时而动！
+
+PrivateInfo:
+  avatarImg: /imgs/avatar.jpg
+  nickName: 小阿宝冬虫夏草
+  sex: 男
+  birthday: 2001-04-27
+  address: 山东 • 济南
+  description: 一直在路上的人...
+
+tocLevel: 3
+copySuffix:
+copyLimite: 200
+copyright: 本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+
+backgroundEffect:
+  sakura: false
+clickEffect:
+  heart: false
+  boom: false
+  grain: true
+
+post:
+  numInPage: 10
+
+comments:
+  valine:
+    enable: true
+    appId: zDzOLpEgKMfolz0rM8kD2EKY-gzGzoHsz
+    appKey: ch1VzaU5W2pNLG3qMwnMHlub
+
+api:
+  # randomImg: https://cdn.seovx.com/d/?mom=302
+  ramdomImg: https://www.dmoe.cc/random.php
+  getFavicon: https://api.xinac.net/icon/?url=
+  randomPoetry: https://v1.jinrishici.com/all.json

@@ -1,0 +1,32 @@
+{
+  "name": "zcyblog",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --max_old_space_size=1024000 ./node_modules/vite/bin/vite.js",
+    "build": "node --max_old_space_size=1024000 ./node_modules/vite/bin/vite.js build",
+    "init": "npm i && npm link"
+  },
+  "bin": {
+    "blog": "./bin/index.cjs"
+  },
+  "dependencies": {
+    "clipboard": "^2.0.11",
+    "pinia": "^2.0.22",
+    "pinia-plugin-persist": "^1.0.0",
+    "valine": "^1.5.1",
+    "vue": "^3.2.37",
+    "vue-router": "^4.1.5"
+  },
+  "devDependencies": {
+    "@modyfi/vite-plugin-yaml": "^1.0.3",
+    "@vitejs/plugin-vue": "^3.1.0",
+    "@yankeeinlondon/code-builder": "^1.0.7",
+    "commander": "^9.4.1",
+    "highlight.js": "^11.6.0",
+    "rollup-plugin-svg-sprites": "^1.2.5",
+    "vite": "^3.1.0",
+    "vite-plugin-md": "^0.20.4"
+  }
+}

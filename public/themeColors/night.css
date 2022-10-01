@@ -1,0 +1,28 @@
+:root {
+  --z-layout-background: #333;
+  --z-toolbar-background: #555;
+  --z-toolbar-shadow: #777;
+  --z-postCard-background: #333;
+  --z-postCard-shadow: #16181a;
+  --z-color-normal: #ddd;
+  --z-selection-background: rgb(255, 255, 255);
+  --z-selection-color: rgb(91, 228, 91);
+  --z-scrollbar-background: #ddd;
+  --z-scrollbar-thumb-background: #666;
+  --z-img-brightness: .8;
+  --z-wave-brightness: 0;
+  --z-postBanner-background: rgba(0, 0, 0, 0.5);
+  --z-mdbody-background: #343a40;
+  --z-mdbody-shadow: #666;
+  --z-mdbody-code: #666;
+  --z-searchPanel-background: #343a40;
+  --z-searchPanel-shadow: #16181a;
+  --z-searchPanel-post-background: #333;
+  --z-toc-background: #576e74;
+  --z-loading-color-1: #333;
+  --z-loading-color-2: #666;
+  --z-nav-background: #222;
+  --z-nav-shadow: #444;
+  --z-nav-hover: #666;
+  --z-nav-item-shadow: #000;
+}

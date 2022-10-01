@@ -1,0 +1,184 @@
+.markdown-body {
+  width: 100%;
+}
+
+/* 复制按键父元素 */
+.markdown-body .code-block {
+  position: relative;
+}
+
+.markdown-body pre:hover+.copyBth,
+.markdown-body pre:hover+.copySuccess,
+.copyBth:hover,
+.copySuccess:hover {
+  opacity: 1;
+}
+
+.copyBth,
+.copySuccess {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  padding: 5px 10px 5px 10px;
+  border-radius: 10px;
+  opacity: 0;
+  cursor: var(--pointer);
+  color: #fff;
+  transition: 1s;
+}
+
+.copyBth {
+  background-color: rgb(137, 205, 250);
+}
+
+.copySuccess {
+  background-color: greenyellow;
+}
+
+/* 代码框内代码 */
+.markdown-body pre {
+  margin: 20px;
+}
+
+.markdown-body pre>code {
+  color: #000 !important;
+  line-height: 25px;
+}
+
+/* 外部链接样式 */
+.markdown-body a {
+  text-decoration: underline;
+  font-weight: bold;
+  padding: 3px 5px 3px 5px;
+  border-radius: 5px;
+}
+.markdown-body a,
+.markdown-body a * {
+  cursor: var(--pointer);
+}
+
+/* 行内代码 */
+.markdown-body :not(pre)>code {
+  background-color: var(--z-mdbody-code);
+  padding: 3px 5px 3px 5px;
+  border-radius: 5px;
+  font-weight: bold;
+}
+
+.markdown-body ol li {
+  list-style-position: inside;
+}
+.markdown-body ol li::marker,
+.markdown-body ul li::marker{
+  color: var(--theme-color);
+  font-size: 18px;
+}
+
+.markdown-body ul li {
+  list-style-position: inside;
+  list-style-type: disc;
+}
+
+.markdown-body p,
+.markdown-body ul li,
+.markdown-body ol li {
+  font-size: 18px;
+  line-height: 30px;
+  word-break: break-all;
+}
+
+/* 标题标识符 */
+.markdown-body h1,
+.markdown-body h2,
+.markdown-body h3,
+.markdown-body h4,
+.markdown-body h5,
+.markdown-body h6 {
+  position: relative;
+  padding-left: 30px;
+  padding-bottom: 5px;
+  padding-top: 5px;
+}
+.markdown-body h1::before,
+.markdown-body h2::before,
+.markdown-body h3::before,
+.markdown-body h4::before,
+.markdown-body h5::before,
+.markdown-body h6::before {
+  content: "※";
+  left: 0;
+  position: absolute;
+  color: var(--theme-color);
+  animation: showAndHide 2s linear infinite;
+}
+@keyframes showAndHide {
+  from {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* 块引用 */
+.markdown-body blockquote {
+  position: relative;
+  margin-left: 10px;
+  padding-left: 10px;
+  font-size: 17px;
+  opacity: .7;
+}
+
+.markdown-body blockquote::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  width: 3px;
+  height: 100%;
+  background-color: #666;
+}
+
+/* 表格 */
+.markdown-body table {
+  border: 1px solid #666;
+  word-break: keep-all;
+}
+
+.markdown-body td,
+.markdown-body th {
+  min-width: 100px;
+}
+
+
+/* 代码样式覆盖 */
+.markdown-body .class-name {
+  color: #b58900;
+}
+.markdown-body .parameter {
+  color: #cb4b16;
+}
+.markdown-body .attr-name,
+.markdown-body .attr-value,
+.markdown-body .rule {
+  color: #F4AF43;
+}
+.markdown-body .regex * {
+  color: var(--prism-regex) !important;
+}
+.markdown-body .language-css,
+.markdown-body .language-javascript,
+.markdown-body .plain-text,
+.markdown-body .spread,
+.markdown-body .interpolation,
+.markdown-body .property-access {
+  color: #000;
+}
+
+.markdown-body img {
+  width: 100%;
+}
