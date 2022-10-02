@@ -62,7 +62,7 @@ const commentEnable = computed(() => frontmatter.value.comment)
       <Valine v-if="commentEnable" :key="props.id" :id="props.id" />
     </div>
     <SideBar :class="$style.rightBar">
-      <!-- <Toc v-if="showToc" :key="props.id" /> -->
+      <Toc v-if="showToc" :key="props.id" />
     </SideBar>
   </div>
 </template>
@@ -70,31 +70,22 @@ const commentEnable = computed(() => frontmatter.value.comment)
 <style module>
 .content {
   display: flex;
-  justify-content: center;
   width: 100%;
-  position: relative;
-  z-index: 1;
-  top: -50px;
+  transform: translateY(-50px);
 }
 
 .main {
+  flex: 1;
   background-color: var(--z-mdbody-background);
   box-shadow: var(--z-mdbody-shadow) 0 0 10px;
-  position: relative;
   border-radius: 20px;
   padding: 30px 40px 60px 40px;
+  margin: 0 5px 0 5px;
 }
 
 @media screen and (max-width: 1350px) {
   .leftBar {
     display: none;
-  }
-}
-
-@media screen and (min-width: 1000px) {
-  .main {
-    width: 50%;
-    min-width: 650px;
   }
 }
 

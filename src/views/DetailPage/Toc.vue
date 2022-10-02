@@ -1,13 +1,13 @@
 <script setup>
-import { ref, computed, onMounted, watch, nextTick } from 'vue'
+import { ref, computed, watch } from 'vue'
 import useStore from '../../store'
+import { subEvent } from '../../utils/pubSub'
 
 const store = useStore()
 const toc = ref([])
 const tocLevel = computed(() => store.config.tocLevel || 3)
 
-function createToc() {
-  const mdBody = document.querySelector(".markdown-body")
+subEvent(mdBody => {
   const titles = Array.from(mdBody.querySelectorAll(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].slice(0, tocLevel.value).join(",")))
   toc.value = titles.map(item => ({
     value: item.innerText,
@@ -15,12 +15,6 @@ function createToc() {
     level: item.nodeName.slice(1),
     inview: false,
   }))
-  nextTick(() => {
-    Array.from(document.querySelectorAll("[post-toc-index]")).forEach(node => {
-      const index = Number(node.getAttribute("post-toc-index"))
-      toc.value[index].tocElement = node
-    })
-  })
   for (let i = 0; i < titles.length; i++) {
     const element = titles[i]
     const observer = new IntersectionObserver(entries => {
@@ -30,10 +24,6 @@ function createToc() {
     })
     observer.observe(element)
   }
-}
-
-onMounted(() => {
-  createToc()
 })
 
 const elementInViewIndex = computed(() => toc.value.findIndex(item => item.inview))
@@ -47,9 +37,9 @@ watch(elementInViewIndex, (value, oldValue) => {
 
 <template>
   <div :class="[$style.toc, 'scrollY']" :style="'--z: ' + toc.length" v-if="toc.length > 2">
-    <span v-for="(item, index) of toc" :key="item.value" @click="() => item.element.scrollIntoView()"
-      :style="'--level:' + item.level" :post-toc-index="index">{{
-          item.value
+    <span v-for="item of toc" :key="item.value" @click="() => item.element.scrollIntoView()"
+      :style="'--level:' + item.level">{{
+      item.value
       }}</span>
     <span :class="$style.chooseLight" :style="'--itemIndex: ' + showTocItemIndex"></span>
   </div>
@@ -57,7 +47,7 @@ watch(elementInViewIndex, (value, oldValue) => {
 
 <style module>
 .toc {
-  width: 100%;
+  width: 90%;
   position: relative;
   background-color: var(--z-toc-background);
   height: min(400px, calc(30px + 30px * var(--z)));
@@ -67,7 +57,7 @@ watch(elementInViewIndex, (value, oldValue) => {
 
 .toc>:not(:last-child) {
   position: relative;
-  z-index: 3;
+  z-index: 1;
   display: block;
   align-items: center;
   height: 30px;
@@ -90,7 +80,6 @@ watch(elementInViewIndex, (value, oldValue) => {
 
 .chooseLight {
   position: absolute;
-  z-index: 2;
   width: 100%;
   height: 30px;
   border-radius: 5px;

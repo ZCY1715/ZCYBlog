@@ -1,16 +1,17 @@
 <script setup>
 import useScroll from '../../hooks/useScroll'
 import { computed } from 'vue'
-import { IsPC } from '../../utils'
 
 const [_, scrollTop] = useScroll()
-const top = computed(() => Math.max(scrollTop.value - 350, 0))
-const styleStr = computed(() => `top: ${top.value}px`)
+const styleStr = computed(() => {
+  const transformTop = Math.max(scrollTop.value - 350, 50)
+  return `transform: translateY(${transformTop}px);`
+})
 
 </script>
 
 <template>
-  <div :class="[$style.container, !IsPC() ? $style.noSeeInMobile : '']">
+  <div :class="[$style.container]">
     <div :class="$style.wrap" :style="styleStr">
       <slot />
     </div>
@@ -19,19 +20,11 @@ const styleStr = computed(() => `top: ${top.value}px`)
 
 <style module>
 .container {
-  margin: 80px 20px 0 20px;
+  margin: 50px 20px 0 20px;
   width: 250px;
-  min-width: 250px;
 }
 
 .wrap {
-  position: relative;
   width: 100%;
-  display: inline-flex;
-  transition: top 0s;
-}
-
-.noSeeInMobile {
-  display: none;
 }
 </style>

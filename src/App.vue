@@ -6,6 +6,7 @@ import { onMounted, nextTick, ref } from 'vue'
 import Nav from './components/Nav.vue'
 import ToolBar from './components/ToolBar/index.vue'
 import Effects from './components/Effects.vue'
+import { debounce } from './utils'
 
 const store = useStore()
 
@@ -23,9 +24,11 @@ const [scrollNode, scrollTop] = useScroll()
 const main = ref(null)
 onMounted(() => {
   scrollNode.value = main.value
-  main.value.addEventListener("scroll", () => {
-    scrollTop.value = main.value.scrollTop
-  })
+  const readScroll = e => {
+    scrollTop.value = e.target.scrollTop
+  }
+  const debounceReadScroll = debounce(readScroll, 100)
+  main.value.addEventListener("scroll", debounceReadScroll)
 })
 
 </script>

@@ -1,6 +1,7 @@
 <script setup>
 import useStore from '../store'
 import { ref, onMounted, computed, markRaw, watch } from 'vue'
+import { subEvent, pubEvent } from '../utils/pubSub'
 
 const props = defineProps({
   id: {
@@ -10,25 +11,25 @@ const props = defineProps({
 })
 
 const store = useStore()
-
-const md = ref(null)
-
-onMounted(async () => {
-  const mdComponent = store.postSet.import(props.id)
-  md.value = markRaw((await mdComponent()).default)
-})
-
 const copyLimite = computed(() => store.config.copyLimite || Infinity)
 const copySuffix = computed(() => store.config.copySuffix || '')
 
-watch(md, () => {
-  const mdBody = document.querySelector(".markdown-body")
+// 代码块横向滚动条
+subEvent(mdBody => {
   mdBody.querySelectorAll("pre").forEach(node => {
     node.classList.add("scrollX")
   })
+})
+
+// 链接打开新窗口
+subEvent(mdBody => {
   mdBody.querySelectorAll("a").forEach(node => {
     node.target = "_blank"
   })
+})
+
+// 代码块添加一键复制
+subEvent(mdBody => {
   import('clipboard').then(ClipboardJS => {
     mdBody.querySelectorAll("pre").forEach(preNode => {
       const copyNode = document.createElement("span")
@@ -53,9 +54,14 @@ watch(md, () => {
       })
     })
   })
-}, {
-  flush: "post"
 })
+
+const md = ref(null)
+onMounted(async () => {
+  const mdComponent = store.postSet.import(props.id)
+  md.value = markRaw((await mdComponent()).default)
+})
+watch(md, () => pubEvent(), { flush: "post" })
 
 
 </script>
