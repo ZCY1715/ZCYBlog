@@ -26,5 +26,6 @@ const styleStr = computed(() => {
 
 .wrap {
   width: 100%;
+  transition: transform 0s;
 }
 </style>
