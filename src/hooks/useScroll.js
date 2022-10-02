@@ -1,28 +1,21 @@
-import { computed } from 'vue'
 import useStore from '../store'
 import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 
+let scrollNode = null
 
 export default function useScroll() {
   const store = useStore()
-  const { scrollNode, scrollSet } = storeToRefs(store)
+  const { scrollTop } = storeToRefs(store)
 
   const node = computed({
-    get() {
-      return scrollNode.value
+    get: () => {
+      return scrollNode
     },
-    set(node) {
-      scrollNode.value = node
-    }
-  })
-  const top = computed({
-    get() {
-      return scrollSet.value.currentScrollTop
-    },
-    set(num) {
-      scrollSet.value.currentScrollTop = num
+    set: value => {
+      scrollNode = value
     }
   })
 
-  return [node, top, computed(() => scrollSet.value)]
+  return [node, scrollTop]
 }

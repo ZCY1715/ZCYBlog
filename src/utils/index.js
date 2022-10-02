@@ -26,24 +26,39 @@ export function distinct(arr) {
 // 防抖
 export function debounce(fn, delay) {
   let timer = null
-  return function _debounce(...arg) {
+  let isAbort = false
+  function _debounce(...args) {
+    if (isAbort) return
     if (timer) clearTimeout(timer)
     timer = setTimeout(() => {
-      fn.apply(this, arg)
+      fn.apply(this, args)
     }, delay)
   }
+  _debounce.abort = () => {
+    isAbort = true
+    timer && clearTimeout(timer)
+  }
+  return _debounce
 }
+
+
 
 // 节流
 export function throttle(fn, delay) {
   let timer = null
-  return function _throttle(...arg) {
-    if (timer) return
+  let isAbort = false
+  function _throttle(...args) {
+    if (isAbort || timer) return
     timer = setTimeout(() => {
-      fn.apply(this, arg)
+      fn.apply(this, args)
       timer = null
     }, delay)
   }
+  _throttle.abort = () => {
+    isAbort = true
+    timer && clearTimeout(timer)
+  }
+  return _throttle
 }
 
 const getUTCTime = date => new Date(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate(), date.getUTCHours(), date.getUTCMinutes(), date.getUTCSeconds())

@@ -1,6 +1,6 @@
 <script setup>
 import useStore from '../../store'
-import { ref, onMounted } from 'vue'
+import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import useRandomImg from '../../hooks/useRandomImg'
 
@@ -11,16 +11,16 @@ const store = useStore()
 const prePost = ref(null)
 const nextPost = ref(null)
 const randomImg = useRandomImg()
-onMounted(() => {
-  prePost.value = store.postSet.getPreMdById(props.id)
-  nextPost.value = store.postSet.getNextMdById(props.id)
+watch(() => props.id, id => {
+  prePost.value = store.postSet.getPreMdById(id)
+  nextPost.value = store.postSet.getNextMdById(id)
   if (prePost.value && !prePost.value.img) {
     prePost.value.img = randomImg()
   }
   if (nextPost.value && !nextPost.value.img) {
     nextPost.value.img = randomImg()
   }
-})
+}, { immediate: true })
 
 const router = useRouter()
 const toPost = id => router.push({ name: 'DetailPage', params: { id } })
@@ -35,7 +35,7 @@ const toPost = id => router.push({ name: 'DetailPage', params: { id } })
         暂无更多~
       </div>
       <div v-else @click="() => toPost(prePost.id)">
-        <Picture :src="prePost.img" :class="$style.morePostImg" />
+        <Picture :src="prePost.img" :class="$style.morePostImg" :key="prePost.img" />
         <div :class="$style.morePostTitle">
           <span>{{ prePost.title }}</span>
         </div>
@@ -46,7 +46,7 @@ const toPost = id => router.push({ name: 'DetailPage', params: { id } })
         暂无更多~
       </div>
       <div v-else @click="() => toPost(nextPost.id)">
-        <Picture :src="nextPost.img" :class="$style.morePostImg" />
+        <Picture :src="nextPost.img" :class="$style.morePostImg" :key="nextPost.img" />
         <div :class="$style.morePostTitle">
           <span>{{ nextPost.title }}</span>
         </div>

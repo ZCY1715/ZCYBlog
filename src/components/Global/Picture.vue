@@ -3,19 +3,25 @@ import Loading from './Loading.vue'
 import picError from '../../assets/PicError.webp'
 import { clone } from '../../utils'
 
-function trySrcs(srcs = [], onSuccess, onError) {
-  if (srcs.length === 0) {
-    onError && onError()
-    return
-  }
-  const img = new Image()
-  img.src = srcs[0]
-  img.onerror = () => {
-    trySrcs(srcs.slice(1), onSuccess, onError)
-  }
-  img.onload = () => {
-    onSuccess && onSuccess(srcs[0])
-  }
+/**
+ * @param {Array} srcs 图片链接数组
+ * @return {Promise}
+ */
+function trySrcs(srcs) {
+  const promises = srcs.map(src => {
+    return new Promise((resolve, reject) => {
+      // 通过 Image 加载
+      const img = new Image()
+      img.src = src
+      img.onload = () => {
+        resolve(src)
+      }
+      img.onerror = () => {
+        reject()
+      }
+    })
+  })
+  return Promise.any(promises)
 }
 
 export default {
@@ -43,8 +49,7 @@ export default {
   components: { Loading },
   methods: {
     loadImg() {
-      trySrcs(
-        this.srcs,
+      trySrcs(this.srcs).then(
         result => {
           this.imgSrc = result
           this.isLoading = false
@@ -52,7 +57,8 @@ export default {
         () => {
           this.imgSrc = this.defaultSrc
           this.isLoading = false
-        })
+        }
+      )
     },
   },
   created() {

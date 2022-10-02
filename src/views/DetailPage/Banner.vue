@@ -15,7 +15,7 @@ const props = defineProps({
 
 <template>
   <div :class="$style.container">
-    <Picture :src="props.img" :class="$style.bannerImg" />
+    <Picture :src="props.img" :class="$style.bannerImg" :key="props.img" />
     <div :class="$style.postTitle" :title="props.title">
       {{ props.title }}
     </div>

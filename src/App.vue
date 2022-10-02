@@ -22,10 +22,9 @@ onMounted(() => {
 const [scrollNode, scrollTop] = useScroll()
 const main = ref(null)
 onMounted(() => {
-  const node = main.value
-  scrollNode.value = node
-  node.addEventListener("scroll", () => {
-    scrollTop.value = node.scrollTop
+  scrollNode.value = main.value
+  main.value.addEventListener("scroll", () => {
+    scrollTop.value = main.value.scrollTop
   })
 })
 
@@ -34,7 +33,7 @@ onMounted(() => {
 <template>
   <Nav />
   <div :class="[$style.container, 'scrollY']" ref="main">
-    <router-view :key="$route.fullPath" />
+    <router-view />
   </div>
   <ToolBar />
   <Effects />

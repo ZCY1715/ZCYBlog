@@ -3,7 +3,7 @@ import useStore from "../../store"
 import useScroll from "../../hooks/useScroll"
 import typed from '../../utils/typed'
 import { computed, onMounted, ref, onBeforeUnmount } from 'vue'
-import { IsPC } from "../../utils"
+import { IsPC, debounce } from "../../utils"
 import useRandomImg from "../../hooks/useRandomImg"
 
 const store = useStore()
@@ -30,25 +30,50 @@ let handleAbortTyped = null
 onMounted(() => {
   handleAbortTyped = typed(mottoRef.value, motto.value)
 })
-
 onBeforeUnmount(() => {
   handleAbortTyped && handleAbortTyped()
 })
 
+const showBannerWave = ref(IsPC())
 
-const showBanner = ref(IsPC())
+// 百叶窗效果
+const containerRef = ref(null)
+const shadesWindow = ref(null)
+onMounted(() => {
+  const canvas = shadesWindow.value
+  const container = containerRef.value
+  const ctx = canvas.getContext("2d")
+  let w = 95
+  function draw() {
+    const { width, height } = canvas
+    ctx.clearRect(0, 0, width, height)
+    const specs = Math.floor(width / 10)
+    const size = width / specs
+    for (let i = 0; i < specs; i++) {
+      ctx.save()
+      ctx.translate(size * i, 0)
+      ctx.fillStyle = "rgba(0,0,0,0.25)"
+      ctx.fillRect(0, 0, size * w / 100, height)
+      ctx.restore()
+    }
+  }
+  function setSize() {
+    canvas.width = container.offsetWidth
+    canvas.height = container.offsetHeight
+    draw()
+  }
+  const debounceSetSize = debounce(setSize, 100)
+  setSize()
+  window.addEventListener("resize", debounceSetSize)
+})
 
 </script>
 
 <template>
-  <div :class="$style.container">
+  <div :class="$style.container" ref="containerRef">
     <Picture :src="bannerImg" :class="$style.bannerImg" />
-    <div :class="$style.arrowDown" @click="scrollDown">
-      <span>
-        <Arrow />
-      </span>
-    </div>
-    <template v-if="showBanner">
+    <canvas ref="shadesWindow" style="pointer-events: none; position: absolute; top:0; left: 0;"></canvas>
+    <template v-if="showBannerWave">
       <div :class="$style.banner_wave_1"></div>
       <div :class="$style.banner_wave_2"></div>
     </template>
@@ -60,6 +85,11 @@ const showBanner = ref(IsPC())
         <span ref="mottoRef"></span>
         <span>※</span>
       </div>
+    </div>
+    <div :class="$style.arrowDown" @click="scrollDown">
+      <span>
+        <Arrow />
+      </span>
     </div>
   </div>
 </template>
@@ -79,7 +109,6 @@ const showBanner = ref(IsPC())
 
 .arrowDown {
   position: absolute;
-  z-index: 10;
   width: 100%;
   height: 70px;
   bottom: 0;
@@ -315,7 +344,6 @@ const showBanner = ref(IsPC())
     bottom: 0;
     width: 400%;
     left: 750px;
-    z-index: 5;
     opacity: 1;
     animation: wave1 90s infinite;
     -webkit-animation: wave1 60s infinite;
@@ -330,7 +358,6 @@ const showBanner = ref(IsPC())
     bottom: 0;
     width: 400%;
     left: 0;
-    z-index: 4;
     opacity: 1;
     animation: wave2 90s infinite;
     -webkit-animation: wave2 60s infinite;

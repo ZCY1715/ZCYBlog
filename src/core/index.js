@@ -33,7 +33,7 @@ export class PostSet {
       return Boolean(publishTime) && [true, undefined].includes(publish)
     })
 
-    // 按时间从后往前   
+    // 按时间从后往前
     posts.sort((pre, cur) => {
       return new Date(cur.frontmatter.publishTime).getTime() - new Date(pre.frontmatter.publishTime).getTime()
     })
@@ -96,24 +96,28 @@ export class PostSet {
     }
   }
   import(id) {
-    return this.Mds.find(item => item.id === id).target
+    return this.Mds.find(item => item.id === id)?.target
   }
   getMdById(id) {
-    return this.Mds.find(item => item.id === id).frontmatter
+    return this.Mds.find(item => item.id === id)?.frontmatter
   }
   getPreMdById(id) {
-    const index = this.Mds.findIndex(item => item.id === id)
-    return index === 0 ? null : {
-      id: this.Mds[index - 1].id,
-      ...this.Mds[index - 1].frontmatter
-    }
+    const index = this.Mds.findIndex(item => item.id === id) - 1
+    return index < 0 ?
+      null :
+      {
+        id: this.Mds[index].id,
+        ...this.Mds[index].frontmatter
+      }
   }
   getNextMdById(id) {
-    const index = this.Mds.findIndex(item => item.id === id)
-    return index === this.Mds.length - 1 ? null : {
-      id: this.Mds[index + 1].id,
-      ...this.Mds[index + 1].frontmatter
-    }
+    const index = this.Mds.findIndex(item => item.id === id) + 1
+    return index <= 0 || index >= this.Mds.length ?
+      null :
+      {
+        id: this.Mds[index].id,
+        ...this.Mds[index].frontmatter
+      }
   }
   getMds() {
     return this.Mds.map(item => ({
@@ -155,42 +159,39 @@ export class PostSet {
   }
 }
 
-const pagesFiles = import.meta.globEager('./sources/pages/*/index.md')
+const pagesFiles = import.meta.glob('./sources/pages/*/index.md', { eager: true })
+const keys = Object.keys(pagesFiles)
+const frontmatters = keys.reduce((obj, key) => {
+  const { frontmatter } = pagesFiles[key]
+  if (frontmatter.path) {
+    obj[key] = frontmatter
+  }
+  return obj
+}, {})
+const pagesRouter = Object.keys(frontmatters).map(key => ({
+  path: frontmatters[key].path,
+  component: pagesFiles[key].default,
+  name: frontmatters[key].path.toLocaleUpperCase(),
+}))
+let pagesInfo = Object.keys(frontmatters).map(key => {
+  let { title, rank, path, config } = frontmatters[key]
+  const arr = key.match(/pages\/(.+)\/index.md/)[1].split('.')
+  if (!title)
+    title = arr[1]
+  if (!rank)
+    rank = Number(arr[0])
+  return {
+    title,
+    rank,
+    pageName: path.toLocaleUpperCase(),
+    config
+  }
+})
+pagesInfo.sort((a, b) => a.rank - b.rank)
+pagesInfo = pagesInfo.map(item => ({
+  title: item.title,
+  pageName: item.pageName,
+  config: item.config
+}))
 
-// 页面操作
-export function pageImport() {
-  const keys = Object.keys(pagesFiles)
-  const frontmatters = keys.reduce((obj, key) => {
-    const { frontmatter } = pagesFiles[key]
-    if (frontmatter.path) {
-      obj[key] = frontmatter
-    }
-    return obj
-  }, {})
-  const pagesRouter = Object.keys(frontmatters).map(key => ({
-    path: frontmatters[key].path,
-    component: pagesFiles[key].default,
-    name: frontmatters[key].path.toLocaleUpperCase(),
-  }))
-  let pagesInfo = Object.keys(frontmatters).map(key => {
-    let { title, rank, path, config } = frontmatters[key]
-    const arr = key.match(/pages\/(.+)\/index.md/)[1].split('.')
-    if (!title)
-      title = arr[1]
-    if (!rank)
-      rank = Number(arr[0])
-    return {
-      title,
-      rank,
-      pageName: path.toLocaleUpperCase(),
-      config
-    }
-  })
-  pagesInfo.sort((a, b) => a.rank - b.rank)
-  pagesInfo = pagesInfo.map(item => ({
-    title: item.title,
-    pageName: item.pageName,
-    config: item.config
-  }))
-  return { pagesRouter, pagesInfo }
-}
+export const pages = { pagesRouter, pagesInfo }

@@ -14,22 +14,7 @@ const pageIndex = computed(() => store.pageIndex)
 
 const pageList = computed(() => {
   const i = pageIndex.value
-  let arr = [i - 1, i, i + 1].filter(item => item >= 1 && item <= pageNums)
-  const start = arr.at(0)
-  const end = arr.at(-1)
-  if (start > 2) {
-    arr.unshift("...")
-  }
-  if (start === 2) {
-    arr.unshift(1)
-  }
-  if (end < pageNums - 1) {
-    arr.push("...")
-  }
-  if (end === pageNums - 1) {
-    arr.push(pageNums)
-  }
-  return arr
+  return [i - 2, i - 1, i, i + 1, i + 2].filter(item => item >= 1 && item <= pageNums)
 })
 
 const [scrollNode, _] = useScroll()
@@ -44,13 +29,6 @@ function toPage(i) {
     scrollNode.value &&
       scrollNode.value.scrollTo({ top: window.innerHeight })
   }
-}
-
-function handleEnter(e) {
-  const index = Number(e.target.value)
-  e.target.value = ""
-  if (index < 1 || index > pageNums) return
-  toPage(index)
 }
 
 </script>
@@ -68,9 +46,6 @@ function handleEnter(e) {
     <span :class="$style.pageNum" v-if="pageList.at(-1) < pageNums">...</span>
     <span :class="$style.rightArrow" @click="() => toPage(pageIndex + 1)" v-show="pageIndex !== pageNums">
       <Arrow />
-    </span>
-    <span :class="$style.pageInput">
-      To:<input type="number" @keyup.enter="handleEnter" />
     </span>
   </div>
 </template>
@@ -112,27 +87,5 @@ function handleEnter(e) {
 
 .targetPage {
   color: var(--theme-color);
-}
-
-.pageInput {
-  font-size: 20px;
-  width: 80px;
-  margin-left: 10px;
-}
-
-.pageInput input {
-  width: 40px;
-  outline: none;
-  font-size: 20;
-  background-color: var(--z-layout-background);
-  border: none;
-  border-bottom: 1px solid var(--theme-color);
-  caret-color: var(--theme-color);
-  padding-left: 10px;
-  font-size: 20px;
-}
-
-.pageInput input::-webkit-inner-spin-button {
-  display: none;
 }
 </style>

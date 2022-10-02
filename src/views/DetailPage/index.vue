@@ -4,7 +4,7 @@ import useRandomImg from '../../hooks/useRandomImg'
 import useTitle from '../../hooks/useTitle'
 import CategoryBar from '../../components/CategoryBar.vue'
 import TagBar from '../../components/TagBar.vue'
-import { onBeforeMount, computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import Banner from './Banner.vue'
 import OtherPost from './OtherPost.vue'
 import Valine from '../../components/Valine.vue'
@@ -12,7 +12,7 @@ import MarkdownBody from '../../components/MarkdownBody.vue'
 import SideBar from './SideBar.vue'
 import Toc from './Toc.vue'
 
-const { id } = defineProps({
+const props = defineProps({
   id: {
     type: String,
     required: true
@@ -20,13 +20,11 @@ const { id } = defineProps({
 })
 
 const store = useStore()
-
 const frontmatter = ref(null)
-
-onBeforeMount(() => {
+watch(() => props.id, id => {
   frontmatter.value = store.postSet.getMdById(id)
   useTitle(frontmatter.value.title)
-})
+}, { immediate: true })
 
 const showToc = computed(() => frontmatter.value.toc)
 
@@ -56,15 +54,15 @@ const commentEnable = computed(() => frontmatter.value.comment)
     </SideBar>
     <div :class="$style.main">
       <AlertBar :message="timeAlertMessage" />
-      <MarkdownBody :id="id" />
+      <MarkdownBody :id="props.id" :key="props.id" />
       <AlertBar type="WARN" :message="copyrightAlertMessage" />
       <CategoryBar :data="frontmatter.categories" />
       <TagBar :data="frontmatter.tags" />
-      <OtherPost :id="id" />
-      <Valine v-if="commentEnable" :id="id" />
+      <OtherPost :id="props.id" />
+      <Valine v-if="commentEnable" :key="props.id" :id="props.id" />
     </div>
     <SideBar :class="$style.rightBar">
-      <Toc v-if="showToc" />
+      <!-- <Toc v-if="showToc" :key="props.id" /> -->
     </SideBar>
   </div>
 </template>

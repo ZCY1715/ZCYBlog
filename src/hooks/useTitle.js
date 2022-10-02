@@ -1,19 +1,29 @@
-import { onBeforeUnmount, ref, isRef, watch } from 'vue'
+import { onBeforeUnmount, isRef, watch } from 'vue'
+
+let used = false
+let titleNode = null
+let originalTitle = ""
+let watchStopHandle = null
 
 export default function useTitle(title) {
 
-  const node = document.querySelector('title')
-
-  const originalTitle = ref(node.innerText)
-
-  if (isRef(title)) {
-    watch(title, value => node.innerText = value + ' — ' + originalTitle.value, { immediate: true })
-  } else {
-    node.innerText = String(title) + ' — ' + originalTitle.value
+  if (!used) {
+    titleNode = document.querySelector('title')
+    originalTitle = titleNode.innerText
+    used = true
+    onBeforeUnmount(() => {
+      used = false
+      titleNode.innerText = originalTitle
+      titleNode = null
+      originalTitle = ""
+      watchStopHandle = null
+    })
   }
 
-  onBeforeUnmount(() => {
-    node.innerText = originalTitle.value
-  })
-
+  if (isRef(title)) {
+    if (watchStopHandle) watchStopHandle()
+    watchStopHandle = watch(title, value => titleNode.innerText = value + ' — ' + originalTitle, { immediate: true })
+  } else {
+    titleNode.innerText = String(title) + ' — ' + originalTitle
+  }
 }
