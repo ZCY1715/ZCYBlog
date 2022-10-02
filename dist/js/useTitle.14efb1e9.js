@@ -1,0 +1,1 @@
+import{O as u,j as o,w as a}from"./@vue.50404711.js";let i=!1,e=null,t="",n=null;function f(l){i||(e=document.querySelector("title"),t=e.innerText,i=!0,u(()=>{i=!1,e.innerText=t,e=null,t="",n=null})),o(l)?(n&&n(),n=a(l,r=>e.innerText=r+" \u2014 "+t,{immediate:!0})):e.innerText=String(l)+" \u2014 "+t}export{f as u};

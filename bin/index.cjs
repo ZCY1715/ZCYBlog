@@ -61,25 +61,10 @@ program.command("page")
 program.command("publish")
   .description("发布最新博客")
   .action(() => {
-    fs.rmSync('../dist', {
-      force: true
-    })
     console.log("\033[43;37m Loading \033[0m \033[40;33m 发布到github中... \033[0m")
     execSync("git add . && git commit -a --allow-empty-message -m '' && git push")
     console.clear()
     console.log("\033[42;37m SUCCESS! \033[0m \033[40;32m 发布成功！ \033[0m")
-  })
-
-program.command("deploy")
-  .description("发布最新博客")
-  .action(() => {
-    console.log("\033[43;37m Loading \033[0m \033[40;33m 打包中... \033[0m")
-    execSync("npm run build")
-    console.log("\033[42;37m SUCCESS! \033[0m \033[40;32m 打包成功！ \033[0m")
-    console.log("\033[43;37m Loading \033[0m \033[40;33m 上传中... \033[0m")
-    execSync("git add . -f && git commit -a --allow-empty-message -m '' && git push")
-    console.clear()
-    console.log("\033[42;37m SUCCESS! \033[0m \033[40;32m 部署成功！ \033[0m")
   })
 
 program.command("preview")
