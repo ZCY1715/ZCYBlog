@@ -86,6 +86,9 @@
     - name: flutter
       url: https://flutter.cn/
       description: 谷歌的多端实现方案
+    - name: vite
+      url: https://vitejs.cn/
+      description: 前端开发与构建工具
 
 - title: 资源
 
