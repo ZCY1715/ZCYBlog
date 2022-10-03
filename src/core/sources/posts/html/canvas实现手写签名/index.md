@@ -45,6 +45,7 @@ index.html
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <script defer src="./index.js"></script>
   <style>
     body {
       margin: 0;
@@ -52,16 +53,31 @@ index.html
       height: 100vh;
       overflow: hidden;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      background-color: red;
+      background-color: antiquewhite;
+    }
+
+    .control {
+      margin-top: 50px;
+    }
+
+    .control span {
+      background-color: rgb(67, 169, 238);
+      padding: 10px 20px 10px 20px;
+      color: #fff;
+      border-radius: 10px;
+      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
-  <canvas id="canvas" style="position: fixed; background-color: #fff;" width="700" height="250"></canvas>
-  <script src="./index.js" />
+  <canvas id="canvas" style="background-color: #fff;" width="700" height="250"></canvas>
+  <div class="control">
+    <span>保存</span>
+  </div>
 </body>
 
 </html>
@@ -97,6 +113,18 @@ canvas.addEventListener("mousemove", e => {
 
 canvas.addEventListener("mouseup", e => {
   isDrawing = false
+})
+
+const saveNode = document.querySelector(".control span")
+
+saveNode.addEventListener("click", () => {
+  const dataURL = canvas.toDataURL()
+  const a = document.createElement("a")
+  document.body.insertAdjacentElement("beforeend", a)
+  a.href = dataURL
+  a.download = `${new Date().getTime()}.png`
+  a.click()
+  a.remove()
 })
 
 ```

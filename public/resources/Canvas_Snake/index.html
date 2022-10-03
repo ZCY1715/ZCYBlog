@@ -25,9 +25,10 @@
     }
 
     .control span {
-      background-color: rgb(67, 169, 238);
       padding: 10px 20px 10px 20px;
+      background-color: rgb(99, 168, 214);
       color: #fff;
+      margin: 0 20px 0 20px;
       border-radius: 10px;
       cursor: pointer;
     }
@@ -35,9 +36,11 @@
 </head>
 
 <body>
-  <canvas id="canvas" style="background-color: #fff;" width="700" height="250"></canvas>
+  <canvas id="canvas" width="500" height="500" style="background-color: #000;"></canvas>
   <div class="control">
-    <span>保存</span>
+    <span id="start">开始</span>
+    <span id="stop">暂停</span>
+    <span id="reset">重置</span>
   </div>
 </body>
 

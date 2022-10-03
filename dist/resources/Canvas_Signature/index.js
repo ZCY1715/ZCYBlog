@@ -27,3 +27,14 @@ canvas.addEventListener("mouseup", e => {
   isDrawing = false
 })
 
+const saveNode = document.querySelector(".control span")
+
+saveNode.addEventListener("click", () => {
+  const dataURL = canvas.toDataURL()
+  const a = document.createElement("a")
+  document.body.insertAdjacentElement("beforeend", a)
+  a.href = dataURL
+  a.download = `${new Date().getTime()}.png`
+  a.click()
+  a.remove()
+})
