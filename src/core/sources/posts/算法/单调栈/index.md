@@ -8,7 +8,7 @@ tags:
 # 类别中已包含文件夹名称
 categories:
 
-description: 
+description: 单调栈算法，主要用于统计标值前后比其满足一定规律的其他值数量
 
 # 该字段必须,格式 <YYYY-MM-DD hh:mm:ss>
 publishTime: 2022-10-05 15:06:49
@@ -30,7 +30,7 @@ publish: true
 
 # 单调栈
 
-**维护一个单调栈**
+**维护一个单调栈，用于确定前方所有元素的最大值或最小值**
 
 ```js
 class MonotonicStack {
@@ -98,34 +98,29 @@ class MonotonicStack {
  * 
  * @param {Array} arr 
  * @param {(itemCurrent,itemOther) => Boolean} compare 决定统计前后满足的规律
- * @return {{BeforeItemNums: [], AfterItemNums: []}}
+ * @return {{beforeItemIndexs: [], afterItemIndex: []}} 返回前后第一个不满足规律的序号
  */
 function monotonicStackUtilize(arr, compare) {
 
-  const _arrIndex = []
-  const topIndex = (i = 0) => _arrIndex[_arrIndex.length - 1 - i] ?? -1
-  const BeforeItemNums = []
-  const AfterItemNums = []
-
   const len = arr.length
+
+  const _arrIndex = []
+  const topIndex = () => _arrIndex[_arrIndex.length - 1] ?? -1
+  const beforeItemIndexs = new Array(len).fill(-1)
+  const afterItemIndexs = new Array(len).fill(len)
+
   for (let i = 0; i < len; i++) {
 
     while (_arrIndex.length !== 0 && !compare(arr[topIndex()], arr[i])) {
-      const index = _arrIndex.pop()
-      AfterItemNums[index] = i - index - 1
+      afterItemIndexs[_arrIndex.pop()] = i
     }
+    beforeItemIndexs[i] = topIndex()
     _arrIndex.push(i)
-    BeforeItemNums[i] = i - topIndex(1) - 1
-  }
-
-  while (_arrIndex.length !== 0) {
-    const index = _arrIndex.shift()
-    AfterItemNums[index] = len - 1 - index
   }
 
   return {
-    BeforeItemNums,
-    AfterItemNums
+    beforeItemIndexs,
+    afterItemIndexs
   }
 
 }
