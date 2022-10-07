@@ -229,7 +229,7 @@ export default {
 
 ## 生命周期
 
-![](./imgs/lifecycle.16e4c08e.png =500x800)
+![](./imgs/lifecycle.16e4c08e.png)
 
 详细的在👉[这里](https://cn.vuejs.org/api/options-lifecycle.html)
 

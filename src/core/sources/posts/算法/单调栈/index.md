@@ -98,7 +98,7 @@ class MonotonicStack {
  * 
  * @param {Array} arr 
  * @param {(itemCurrent,itemOther) => Boolean} compare 决定统计前后满足的规律
- * @return {{beforeItemIndexs: [], afterItemIndex: []}} 返回前后第一个不满足规律的序号
+ * @return {{beforeItemIndexs: [], afterItemIndexs: []}} 返回前后第一个不满足规律的序号
  */
 function monotonicStackUtilize(arr, compare) {
 
