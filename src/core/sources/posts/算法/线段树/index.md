@@ -132,7 +132,7 @@ class SegmentTree {
 
 ```js
 class TreeNode {
-  constructor(start, end) {
+  constructor(start, end, initValue) {
     this.start = start
     this.end = end
     /**
@@ -143,9 +143,9 @@ class TreeNode {
      * @type {TreeNode}
      */
     this.right = null
-    this.value = 0
+    this.value = initValue
     this.isLazy = false
-    this.lazyValue = 0
+    this.LazyFns = []
   }
 }
 
@@ -155,17 +155,13 @@ class SegmentTree {
    * 
    * @param {Number} start 线段起点
    * @param {Number} end 线段终点
+   * @param {() => initValue} init 形成 TreeNode 的初始值
+   * @param {(leftValue, rightValue) => parentValue} pushUp  向上合并
    */
-  constructor(start, end) {
-    this.root = new TreeNode(start, end)
-  }
-
-  /**
-   * 
-   * @param {TreeNode} node 
-   */
-  pushUp(node) {
-    node.value = node.left.value + node.right.value
+  constructor(start, end, init, pushUp) {
+    this.root = new TreeNode(start, end, init())
+    this._init = init
+    this._pushUp = pushUp
   }
 
   /**
@@ -175,26 +171,28 @@ class SegmentTree {
   pushDown(node) {
     if (!node) return
     const middle = Math.floor((node.start + node.end) / 2)
-    if (!node.left) node.left = new TreeNode(node.start, middle)
-    if (!node.right) node.right = new TreeNode(middle + 1, node.end)
+    if (!node.left) node.left = new TreeNode(node.start, middle, this._init())
+    if (!node.right) node.right = new TreeNode(middle + 1, node.end, this._init())
     if (node.isLazy) {
       node.left.isLazy = true
-      node.left.value += node.lazyValue
-      node.left.lazyValue += node.lazyValue
+      node.left.LazyFns = [...node.LazyFns]
+      node.left.value = node.LazyFns.reduce((value, Fn) => Fn(value), node.left.value)
       node.right.isLazy = true
-      node.right.value += node.lazyValue
-      node.right.lazyValue += node.lazyValue
+      node.right.LazyFns = [...node.LazyFns]
+      node.right.value = node.LazyFns.reduce((value, Fn) => Fn(value), node.left.value)
       node.isLazy = false
-      node.lazyValue = 0
+      node.LazyFns = []
     }
   }
 
-  pointUpdate(index, value) {
-    this.updateNode(this.root, index, index, value)
-  }
-
-  rangeUpdate(start, end, value) {
-    this.updateNode(this.root, start, end, value)
+  /**
+   * 
+   * @param {*} start 
+   * @param {*} end 
+   * @param {(originValue) => newValue} modifyValueFn 
+   */
+  update(start, end, modifyValueFn) {
+    this.updateNode(this.root, start, end, modifyValueFn)
   }
 
   /**
@@ -202,22 +200,21 @@ class SegmentTree {
    * @param {TreeNode} node 
    * @param {Number} start 
    * @param {Number} end 
-   * @param {*} value 
-   * @returns 
+   * @param {(originValue) => newValue} modifyValueFn 
    */
-  updateNode(node, start, end, value) {
+  updateNode(node, start, end, modifyValueFn) {
     if (!node) return
     if (node.start > end || node.end < start) return
     if (node.start >= start && node.end <= end) {
-      node.value += value
+      node.value = modifyValueFn(node.value)
       node.isLazy = true
-      node.lazyValue += value
+      node.LazyFns.push(modifyValueFn)
       return
     }
     this.pushDown(node)
-    this.updateNode(node.left, start, end, value)
-    this.updateNode(node.right, start, end, value)
-    this.pushUp(node)
+    this.updateNode(node.left, start, end, modifyValueFn)
+    this.updateNode(node.right, start, end, modifyValueFn)
+    node.value = this._pushUp(node.left.value, node.right.value)
   }
 
   query(start, end) {
@@ -231,15 +228,18 @@ class SegmentTree {
    * @param {*} end 
    */
   queryNode(node, start, end) {
-    if (!node) return 0
-    if (node.start > end || node.end < start) return 0
+    if (!node) return null
+    if (node.start > end || node.end < start) return null
     if (node.start >= start && node.end <= end) return node.value
     else {
       this.pushDown(node)
-      return this.queryNode(node.left, start, end) + this.queryNode(node.right, start, end)
+      const leftValue = this.queryNode(node.left, start, end)
+      const rightValue = this.queryNode(node.right, start, end)
+      if (leftValue === null) return rightValue
+      if (rightValue === null) return leftValue
+      return this._pushUp(leftValue, rightValue)
     }
   }
-
 }
 ```
 

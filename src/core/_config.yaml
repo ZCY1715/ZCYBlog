@@ -33,7 +33,7 @@ comments:
     appKey: ch1VzaU5W2pNLG3qMwnMHlub
 
 api:
-  # randomImg: https://cdn.seovx.com/d/?mom=302
-  ramdomImg: https://www.dmoe.cc/random.php
+  randomImg: https://cdn.seovx.com/d/?mom=302
+  # ramdomImg: https://www.dmoe.cc/random.php
   getFavicon: https://api.xinac.net/icon/?url=
   randomPoetry: https://v1.jinrishici.com/all.json
